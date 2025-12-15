@@ -7,14 +7,13 @@ function mcanimate(m::mocapdata; framerate = m.freq, filename = "animation.mp4")
     xlim=extrema(filter(!isnan,X))
     ylim=extrema(filter(!isnan,Y))
     zlim=extrema(filter(!isnan,Z))
-
     ax = Axis3(fig[1, 1],aspect=:data,limits = (xlim[1], xlim[2], ylim[1], ylim[2], zlim[1], zlim[2]))
     ax.azimuth = 0
     ax.elevation = 0
     hidespines!(ax)
     hidedecorations!(ax)
 
-    p= meshscatter!(ax,X[1,:],Y[1,:],Z[1,:],markersize=20)
+    p = meshscatter!(ax,X[1,:],Y[1,:],Z[1,:],markersize=20)
 
     conn = [(p[1][][i-1], p[1][][i]) for i in 2:length(p[1][])]
     pl = linesegments!(ax, conn,color=:blue)
