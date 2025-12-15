@@ -4,11 +4,11 @@ using CSV, DataFrames, GLMakie, SavitzkyGolay
 
 import Base: *
 
-export mcanimate
-include("mcanimate.jl")
-
 export mcread
 include("mcread.jl")
+
+export mcanimate
+include("mcanimate.jl")
 
 export mcmerge
 include("mcmerge.jl")
