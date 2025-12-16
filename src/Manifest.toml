@@ -1,0 +1,12 @@
+# This file is machine-generated - editing it directly is not advised
+
+julia_version = "1.12.1"
+manifest_format = "2.0"
+project_hash = "fad76043ecbb1fd0f7e063ae66e2d375278d2d71"
+
+[[deps.Mocaptoolbox]]
+git-tree-sha1 = "2582ac69f2b175bb880d87699ef46b18cad8a289"
+repo-rev = "main"
+repo-url = "git@github.com:mocaptoolbox/Mocaptoolbox.jl.git"
+uuid = "65b40d4f-8f1d-4e4a-a792-0ebbcb3a8aaf"
+version = "1.0.0-DEV"
