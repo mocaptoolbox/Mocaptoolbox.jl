@@ -1,4 +1,3 @@
-using Infiltrator
 function mcanimate(m::mocapdata; framerate = m.freq, filename = "animation.mp4",azimuth=0,elevation=0)
     data = Matrix(m.data)
     X = data[:, 1:3:end]
@@ -16,7 +15,6 @@ function mcanimate(m::mocapdata; framerate = m.freq, filename = "animation.mp4",
 
     p = meshscatter!(ax,X[1,:],Y[1,:],Z[1,:],markersize=20)
 
-    @infiltrate
     conn = [(p[1][][i-1], p[1][][i]) for i in 2:length(p[1][])]
     pl = linesegments!(ax, conn,color=:blue)
 
