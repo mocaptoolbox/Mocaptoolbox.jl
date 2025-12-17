@@ -1,4 +1,4 @@
-function mcanimate(m::mocapdata; framerate = m.freq, filename = "animation.mp4",azimuth=0,elevation=0)
+function mcanimate(m::Mocapdata; framerate = m.freq, filename = "../animation.mp4",azimuth=0,elevation=0,showconn=true,showmnumbers=false,showmnames=false)
     data = Matrix(m.data)
     X = data[:, 1:3:end]
     Y = data[:, 2:3:end]
@@ -15,9 +15,23 @@ function mcanimate(m::mocapdata; framerate = m.freq, filename = "animation.mp4",
 
     p = meshscatter!(ax,X[1,:],Y[1,:],Z[1,:],markersize=20)
 
-    conn = [(p[1][][i-1], p[1][][i]) for i in 2:length(p[1][])]
-    pl = linesegments!(ax, conn,color=:blue)
 
+    if showconn
+        if all(iszero,m.conn)
+            conn = [(p[1][][i-1], p[1][][i]) for i in 2:length(p[1][])]
+        else
+            conn = [(p[1][][m.conn[i,1]],p[1][][m.conn[i,2]]) for i in 1:size(m.conn,1)]
+        end
+        pl = linesegments!(ax, conn,color=:blue)
+    end
+
+    if showmnumbers && !showmnames
+        txt = text!(ax,X[1,:],Y[1,:],Z[1,:],text = string.(1:length(m.markerName))) # text as numbers
+    elseif showmnames && !showmnumbers
+        txt = text!(ax,X[1,:],Y[1,:],Z[1,:],text = m.markerName) # text as marker names
+    elseif showmnumbers && showmnames
+        txt = text!(ax,X[1,:],Y[1,:],Z[1,:],text = string.(1:length(m.markerName)) .* " " .* m.markerName) # text as marker names
+    end
     N = m.nFrames
     record(fig,filename,1:N;framerate=framerate) do i
 
@@ -27,7 +41,16 @@ function mcanimate(m::mocapdata; framerate = m.freq, filename = "animation.mp4",
         col_3 = Observable(:z)
         data = @lift(Point{3,Float64}.($df_obs[:, $col_1], $df_obs[:, $col_2],$df_obs[:, $col_3]))
         p[1][] = data[]
-        conn = [(p[1][][i-1], p[1][][i]) for i in 2:length(p[1][])]
-        pl[1][]=reinterpret(Point{3,Float64},conn)
+        if showmnumbers || showmnames
+            txt[1][] = data[]
+        end
+        if showconn
+            if all(iszero,m.conn)
+                conn = [(p[1][][i-1], p[1][][i]) for i in 2:length(p[1][])]
+            else
+                conn = [(p[1][][m.conn[i,1]],p[1][][m.conn[i,2]]) for i in 1:size(m.conn,1)]
+            end
+            pl[1][] = reinterpret(Point{3,Float64},conn)
+        end
     end
 end
