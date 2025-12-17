@@ -1,4 +1,4 @@
-function mctimeder(m::mocapdata,n=1;window_size=7)
+function mctimeder(m::Mocapdata,n=1;window_size=7)
     function differentiate(d,n,f)
         ncol = size(d,2)
         nrow = size(d,1)

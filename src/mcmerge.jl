@@ -1,4 +1,4 @@
-function mcmerge(m::mocapdata...)
+function mcmerge(m::Mocapdata...)
     length(unique(map(x -> x.freq,m))) == 1 || error("Different frame rates. Cannot merge")
     dfs = map(x->x.data,m)
     minlen = minimum(nrow, dfs)
@@ -13,4 +13,4 @@ function mcmerge(m::mocapdata...)
     return res
 end
 
-*(m::mocapdata...) = mcmerge(m...)
+*(m::Mocapdata...) = mcmerge(m...)
