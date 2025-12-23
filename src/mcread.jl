@@ -8,7 +8,7 @@
         nFrames::Int
         nMarkers::Int
         freq::Int
-        markerName::Vector{String}
+        markerName::Union{String, Vector{String}}
         data::DataFrame
         meta::Vector
         times::DataFrame
