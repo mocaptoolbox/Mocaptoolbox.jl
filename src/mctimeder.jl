@@ -1,5 +1,5 @@
-function mctimeder(m::Mocapdata,n=1;window_size=7)
-    function differentiate(d,n,f)
+function mctimeder(m::Mocapdata,n::Int=1;window_size::Int=7)::Mocapdata
+    function differentiate(d::DataFrame,n::Int,f::Int)
         ncol = size(d,2)
         nrow = size(d,1)
         pol_order=n
@@ -13,7 +13,7 @@ function mctimeder(m::Mocapdata,n=1;window_size=7)
         der = [repeat(tmp[1,:]',div((f-1),2),1);tmp;repeat(tmp[end,:]',div((f+1),2),1)]
         return der
     end
-    function smoothderiv(data,k,f,o)
+    function smoothderiv(data::Vector{Float64},k::Int,f::Int,o::Int)
         sg = savitzky_golay(data,f,k,deriv=o)
         return sg.y
     end
