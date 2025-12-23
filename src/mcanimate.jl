@@ -1,40 +1,23 @@
-function mcanimate(m::Mocapdata; framerate = m.freq, filename = "../animation.mp4",azimuth=0,elevation=0,showconn=true,showmnumbers=false,showmnames=false)
-    data = Matrix(m.data)
-    X = data[:, 1:3:end]
-    Y = data[:, 2:3:end]
-    Z = data[:, 3:3:end]
-    fig = Figure()
-    xlim=extrema(filter(!isnan,X))
-    ylim=extrema(filter(!isnan,Y))
-    zlim=extrema(filter(!isnan,Z))
-    ax = Axis3(fig[1, 1],aspect=:data,limits = (xlim[1], xlim[2], ylim[1], ylim[2], zlim[1], zlim[2]))
-    ax.azimuth = azimuth
-    ax.elevation = elevation
-    hidespines!(ax)
-    hidedecorations!(ax)
+function mcanimate(m::Mocapdata;
+filename = "../animation.mp4",
+azimuth=0,
+elevation=0,
+showconn=true,
+showmnumbers=false,
+showmnames=false,
+showaxes=false,
+backgroundcolor = :black,
+figsize=(800,600),
+msize=30,
+mcolor=:white,
+mcolormap = :Accent_8,
+connwidth=1,
+conncolor=:white)
 
-    p = meshscatter!(ax,X[1,:],Y[1,:],Z[1,:],markersize=20)
-
-
-    if showconn
-        if all(iszero,m.conn)
-            conn = [(p[1][][i-1], p[1][][i]) for i in 2:length(p[1][])]
-        else
-            conn = [(p[1][][m.conn[i,1]],p[1][][m.conn[i,2]]) for i in 1:size(m.conn,1)]
-        end
-        pl = linesegments!(ax, conn,color=:blue)
-    end
-
-    if showmnumbers && !showmnames
-        txt = text!(ax,X[1,:],Y[1,:],Z[1,:],text = string.(1:length(m.markerName))) # text as numbers
-    elseif showmnames && !showmnumbers
-        txt = text!(ax,X[1,:],Y[1,:],Z[1,:],text = m.markerName) # text as marker names
-    elseif showmnumbers && showmnames
-        txt = text!(ax,X[1,:],Y[1,:],Z[1,:],text = string.(1:length(m.markerName)) .* " " .* m.markerName) # text as marker names
-    end
+fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth,conncolor=conncolor)
     N = m.nFrames
-    record(fig,filename,1:N;framerate=framerate) do i
-
+    mfreq = m.freq
+    record(fig,filename,1:N;framerate=mfreq) do i
         df_obs = Observable(DataFrame(x = X[i,:], y = Y[i,:], z = Z[i,:]))
         col_1 = Observable(:x)
         col_2 = Observable(:y)
