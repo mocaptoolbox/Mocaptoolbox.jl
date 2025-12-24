@@ -52,6 +52,9 @@ include("heatmap.jl")
 export mcvel2local
 include("mcvel2local.jl")
 
+export mcorientation
+include("mcorientation.jl")
+
 export mccumdist
 include("mccumdist.jl")
 
