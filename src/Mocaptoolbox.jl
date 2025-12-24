@@ -49,4 +49,10 @@ include("plot.jl")
 export heatmap
 include("heatmap.jl")
 
+export mcvel2local
+include("mcvel2local.jl")
+
+export mccumdist
+include("mccumdist.jl")
+
 end
