@@ -61,4 +61,8 @@ include("mccumdist.jl")
 export mcrejectoutliers
 include("mcrejectoutliers.jl")
 
+export mcrms
+include("mcrms.jl")
+
+
 end
