@@ -1,4 +1,4 @@
-function mctimeder(m::Mocapdata,n::Int=1;window_size::Int=7)::Mocapdata
+function mctimeder(m::Union{Mocapdata,Normdata},n::Int=1;window_size::Int=7)
     function differentiate(d::DataFrame,n::Int,f::Int)
         ncol = size(d,2)
         nrow = size(d,1)

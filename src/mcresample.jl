@@ -1,4 +1,4 @@
-function mcresample(m::Mocapdata, newfreq)
+function mcresample(m::Union{Mocapdata,Normdata}, newfreq)
 d1 = m.data
     t1 = collect(0:(size(d1,1)-1))/m.freq
     t2 = 0:(1/newfreq):t1[end]

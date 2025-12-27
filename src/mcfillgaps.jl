@@ -1,4 +1,4 @@
-function mcfillgaps(m::Mocapdata)
+function mcfillgaps(m::Union{Mocapdata,Normdata})
     M = Matrix(m.data)
     t = 1:size(M,1)
 

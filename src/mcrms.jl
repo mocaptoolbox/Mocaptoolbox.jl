@@ -1,4 +1,4 @@
-function mcrms(m::Mocapdata)
+function mcrms(m::Union{Mocapdata,Normdata})
     r = nanrms(Matrix(m.data))
     return DataFrame(r,names(m.data))
 end

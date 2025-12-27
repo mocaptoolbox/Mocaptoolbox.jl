@@ -1,4 +1,4 @@
-function mccorr(m1::Mocapdata,m2::Mocapdata)
+function mccorr(m1::Union{Mocapdata,Normdata},m2::Union{Mocapdata,Normdata})
     c = diag(cor(Matrix(m1.data),Matrix(m2.data)))
     return DataFrame(c',names(m1.data))
 end

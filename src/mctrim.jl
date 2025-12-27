@@ -34,7 +34,7 @@ m2 = mctrim(m, 1.0, 3.5; type="sec", timetable="reset")
 m3 = mctrim(m, 100, 300; type="frame", timetable="keep")
 ```
 """
-function mctrim(m::Mocapdata,t1,t2;type="sec",timetable="reset")
+function mctrim(m::Union{Mocapdata,Normdata},t1,t2;type="sec",timetable="reset")
     d1 = Matrix(m.data)
     tm = Matrix(m.times)
     if type == "sec"

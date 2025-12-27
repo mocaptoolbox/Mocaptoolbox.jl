@@ -1,4 +1,4 @@
-function plot(m::Mocapdata)
+function plot(m::Union{Mocapdata,Normdata};reorder=true)
     fig = Figure()
     ax = Axis(fig[1,1],xlabel="Time (s)",ylabel="Feature value")
     for k in 1:size(m.data,2)

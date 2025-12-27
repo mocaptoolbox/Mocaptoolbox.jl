@@ -1,4 +1,4 @@
-function mccomplexity(m::Mocapdata)
+function mccomplexity(m::Union{Mocapdata,Normdata})
     d = Matrix(m.data)
     d .-= mean(d,dims=1)
     l = eigvals(d'*d)
