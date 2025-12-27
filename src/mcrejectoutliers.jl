@@ -1,9 +1,9 @@
     """
     Reject outlier data based on pairwise Euclidean distances between markers.
-    Example: If the distance between two markers for a given time point is higher or lower than Tol, both markers are converted to NaNs for that time point.
-    Tol is in units of measurement, e.g. default is 250 mm for Qualisys MoCap/Theia3D data.
+    Example: If the distance between two markers for a given time point is higher or lower than `thres`, both markers are converted to NaNs for that time point.
+    Thres is in units of measurement, e.g. default is 250 mm for Qualisys MoCap/Theia3D data.
     """
-function mcrejectoutliers(m::Mocapdata;fun=nanmedian::Function,tol=250::Float64)
+function mcrejectoutliers(m::Mocapdata;fun=nanmedian::Function,thres=250::Real)
     x = Matrix(m.data)
     r,c = size(x)
     dm = Array{Float64}(undef,m.nMarkers,m.nMarkers,r);
@@ -14,7 +14,7 @@ function mcrejectoutliers(m::Mocapdata;fun=nanmedian::Function,tol=250::Float64)
     end
     applyfun(dm,fun) = dropdims(fun(dm,dims=3),dims=3)
     absdev = abs.(dm .- applyfun(dm,fun))
-    absdev[absdev .> tol] .= NaN
+    absdev[absdev .> thres] .= NaN
     for f = 1:r
         for k = 1:m.nMarkers-1
             for j = (k+1):m.nMarkers

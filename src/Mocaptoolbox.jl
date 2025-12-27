@@ -7,6 +7,9 @@ import Base: *
 export mcread
 include("mcread.jl")
 
+export mcnorm
+include("mcnorm.jl")
+
 export mcplotframe
 include("mcplotframe.jl")
 
@@ -15,6 +18,9 @@ include("mcanimate.jl")
 
 export mcmerge
 include("mcmerge.jl")
+
+export mcsplit
+include("mcsplit.jl")
 
 export mctimeder
 include("mctimeder.jl")
@@ -27,9 +33,6 @@ include("mctrim.jl")
 
 export mcgetmarker
 include("mcgetmarker.jl")
-
-export mcnorm
-include("mcnorm.jl")
 
 export mccorr
 include("mccorr.jl")
@@ -49,6 +52,9 @@ include("plot.jl")
 export heatmap
 include("heatmap.jl")
 
+export hist
+include("hist.jl")
+
 export mcvel2local
 include("mcvel2local.jl")
 
@@ -63,6 +69,9 @@ include("mcrejectoutliers.jl")
 
 export mcrms
 include("mcrms.jl")
+
+export mcdropgaps
+include("mcdropgaps.jl")
 
 
 end
