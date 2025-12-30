@@ -1,6 +1,6 @@
 module Mocaptoolbox
 
-using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances
+using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, FFMPEG
 
 import Base: *
 
@@ -64,6 +64,9 @@ include("mcorientation.jl")
 export mccumdist
 include("mccumdist.jl")
 
+export mcinterpersonaldist
+include("mcinterpersonaldist.jl")
+
 export mcrejectoutliers
 include("mcrejectoutliers.jl")
 
@@ -72,6 +75,9 @@ include("mcrms.jl")
 
 export mcdropgaps
 include("mcdropgaps.jl")
+
+export mcrepairtheiadyad
+include("mcrepairtheiadyad.jl")
 
 
 end
