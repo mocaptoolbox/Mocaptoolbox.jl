@@ -1,4 +1,7 @@
-function mcorientation(source::Mocapdata,lmarker1::Int,rmarker1::Int,target::Mocapdata,lmarker2::Int,rmarker2::Int)
+function mcorientation(source::Mocapdata,lmarker1::Int,rmarker1::Int,target::Mocapdata,lmarker2::Int,rmarker2::Int;normalized=false)
+    """
+    Option normalized=true normalizes the orientation measure (originally in degrees) to a value between 0 (no orientation) and 2 (fully oriented)
+    """
     halves(x) = (x[:,1:div(size(x,2),2)],  x[:,div(size(x,2),2)+1:end])
     s1,s2 = halves(Matrix(mcgetmarker(source,[lmarker1,rmarker1]).data))
     s3,s4 = halves(Matrix(mcgetmarker(target,[lmarker2,rmarker2]).data))
@@ -11,5 +14,6 @@ function mcorientation(source::Mocapdata,lmarker1::Int,rmarker1::Int,target::Moc
     az2 = atan.(v2[:,2],v2[:,1])
     r2 = hypot.(v2[:,1],v2[:,2])
     or = 180 .* (az1.-az2)./π
-    return or, r2
+    normalized == true ? or = 2 .- abs.(or) ./ 180 : nothing
+ return or, r2
 end
