@@ -1,6 +1,6 @@
 module Mocaptoolbox
 
-using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, FFMPEG
+using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, Quaternions, FFMPEG
 
 import Base: *
 
@@ -79,5 +79,7 @@ include("mcdropgaps.jl")
 export mcrepairtheiadyad
 include("mcrepairtheiadyad.jl")
 
+export mcrotate
+include("mcrotate.jl")
 
 end
