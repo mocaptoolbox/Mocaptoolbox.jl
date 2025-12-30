@@ -1,4 +1,3 @@
-function mcrepairtheiadyad(r::Vector{Mocapdata})
 """
 For dyadic Theia3D data. Fills nans in data based on other .tsv files created by Theia3D. To be used when multiple TSVs are generated instead of two. Example:
 
@@ -6,6 +5,7 @@ f = ["pose_filt_0.tsv", "pose_filt_1.tsv", "pose_filt_2.tsv", "pose_filt_3.tsv",
 r = mcread.(f)
 res1,res2 = mcrepairtheiadyad(r)
 """
+function mcrepairtheiadyad(r::Vector{Mocapdata})
     m = [Matrix(x.data) for x in r]
     ind = findall(.!isnan.([x[1] for x in m]))
 

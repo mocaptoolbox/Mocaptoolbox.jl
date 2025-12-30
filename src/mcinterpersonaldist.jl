@@ -1,7 +1,7 @@
-function mcinterpersonaldist(m1::Mocapdata,m2::Mocapdata)
     """
     Calculate, for each marker, horizontal interpersonal Euclidean distance.
     """
+function mcinterpersonaldist(m1::Mocapdata,m2::Mocapdata)
     if !all(size(m1.data) .== size(m2.data))
         error("Both mocap structs must have the same size")
     end
