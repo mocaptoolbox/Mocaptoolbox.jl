@@ -1,20 +1,31 @@
-function mcanimate(m::Mocapdata;
-filename = "../animation.mp4",
-azimuth=0,
-elevation=0,
-showconn=true,
-showmnumbers=false,
-showmnames=false,
-showaxes=false,
-backgroundcolor = :black,
-figsize=(800,600),
-msize=30,
-mcolor=:white,
-mcolormap = :Accent_8,
-connwidth=1,
-conncolor=:white)
+"""
+Audio can be added, e.g.:
+r = mcread(...)
+mcanimate(r,audiofile="audio.mp3")
 
-fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth,conncolor=conncolor)
+It is also possible to trim the MoCap data and animate it with synchronized audio:
+
+r = mcread(...)
+t = mctrim(r,10,20,timetable="keep")
+mcanimate(t,audiofile="audio.mp3")
+"""
+function mcanimate(m::Mocapdata;
+    filename = "../animation.mp4",
+    azimuth=0,
+    elevation=0,
+    showconn=true,
+    showmnumbers=false,
+    showmnames=false,
+    showaxes=false,
+    backgroundcolor = :black,
+    figsize=(800,600),
+    msize=30,
+    mcolor=:white,
+    mcolormap = :Accent_8,
+    connwidth=1,
+    conncolor=:white,
+    audiofile=[])
+    fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth,conncolor=conncolor)
     N = m.nFrames
     mfreq = m.freq
     record(fig,filename,1:N;framerate=mfreq) do i
@@ -35,5 +46,13 @@ fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimu
             end
             pl[1][] = reinterpret(Point{3,Float64},conn)
         end
+    end
+    if !isempty(audiofile)
+        file_extension(file::String) = file[findlast(==('.'), file)+1:end]
+        ext = file_extension(filename)
+        tmpfile = ".tmp_mocap_vid."*ext
+        audiostart = m.times.Time[1]
+        ffmpeg_exe(`-i $filename -ss $audiostart -i $audiofile -map 0:v -map 1:a -c:v copy -shortest $tmpfile`)
+        mv(tmpfile, filename,force=true)
     end
 end
