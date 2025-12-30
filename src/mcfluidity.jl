@@ -3,5 +3,5 @@ function mcfluidity(m::Mocapdata)
     a = mctimeder(v)
     vm = nanmean(Matrix(mcnorm(v).data),dims=1)
     am = nanmean(Matrix(mcnorm(a).data),dims=1)
-    return vm/am;
+    return (vm/am)[1];
 end
