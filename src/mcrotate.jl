@@ -11,14 +11,16 @@ function mcrotate(m::Mocapdata,θ::Number;axis::Vector = [0, 0, 1],point=Vector{
     nm = m.nMarkers
     x3 = reshape(x,r,3,nm)
     if all(ismissing.(point))
-        point = nanmean.([x3[:,k,:] for k in 1:3])
+        point = @views nanmean.([x3[:,k,:] for k in 1:3])
     end
     R = AngleAxis(θ, axis...)
     r3 = similar(x3)
-    point_reshaped = reshape(point, 1, 3)
-    for j in 1:nm
-        r3[:,:,j] = (R * (x3[:,:,j] .- point_reshaped)')' .+ point'
+    tmp = Matrix{Float64}(undef,r,3)
+    @views for j in axes(x3,3)
+        tmp = x3[:,:,j]
+        mul!(r3[:,:,j], tmp, R')
     end
+    r3 .+= reshape(point, 1, 3) - reshape(point, 1, 3) * R'
     x2 = reshape(r3,r,c)
     res = deepcopy(m)
     res.data = DataFrame(x2,names(m.data))
