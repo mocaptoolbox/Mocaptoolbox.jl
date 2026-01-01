@@ -11,7 +11,7 @@ figsize=(800,600),
 msize=30,
 mcolor=:white,
 mcolormap = :Accent_8,
-connwidth=1,
+connwidth=2,
 conncolor=:white)
 
     fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = framenum, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth, conncolor=conncolor)

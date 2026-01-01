@@ -10,7 +10,7 @@ t = mctrim(r,10,20,timetable="keep")
 mcanimate(t,audiofile="audio.mp3")
 """
 function mcanimate(m::Mocapdata;
-    filename = "../animation.mp4",
+    filename = "animation.mp4",
     azimuth=0,
     elevation=0,
     showconn=true,
@@ -22,7 +22,7 @@ function mcanimate(m::Mocapdata;
     msize=30,
     mcolor=:white,
     mcolormap = :Accent_8,
-    connwidth=1,
+    connwidth=2,
     conncolor=:white,
     audiofile=[])
     fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth,conncolor=conncolor)
