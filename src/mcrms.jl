@@ -3,9 +3,11 @@ function mcrms(m::Union{Mocapdata,Normdata})
     return DataFrame(r,names(m.data))
 end
 function mcrms(m::Mocapdata,dim)
-    r = nanrms(Matrix(m.data[:,dim:3:end]))
+    @views r = nanrms(Matrix(m.data[:,dim:3:end]))
     return DataFrame(r,m.markerName)
 end
 function nanrms(x)
-    sqrt.(nanmean(x.^2,dims=1))
+    sumsq = sum(x -> isnan(x) ? 0.0 : x*x, x; dims=1)
+    count = sum(!isnan, x; dims=1)
+    sqrt.(sumsq ./ count)
 end
