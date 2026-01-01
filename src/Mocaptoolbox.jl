@@ -1,11 +1,15 @@
 module Mocaptoolbox
 
-using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, Quaternions, FFMPEG
+using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, Quaternions, FFMPEG, StaticArrays
+# StaticArrays and Quaternions not currently being used!
 
 import Base: *
 
 export mcread
 include("mcread.jl")
+
+export mcreadfolder
+include("mcreadfolder.jl")
 
 export mcnorm
 include("mcnorm.jl")

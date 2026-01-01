@@ -15,6 +15,7 @@ NaNStatistics = "b946abbf-3ea7-4610-9019-9858bfdeaf2d"
 Quaternions = "94ee1d12-ae83-5a48-8b1c-48b8ff168ae0"
 Rotations = "6038ab10-8711-5258-84ad-4b1120ba62dc"
 SavitzkyGolay = "c4bf5708-b6a6-4fbe-bcd0-6850ed671584"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
@@ -28,6 +29,7 @@ NaNStatistics = "0.6.54"
 Quaternions = "0.7.7"
 Rotations = "1.7.1"
 SavitzkyGolay = "0.9.1"
+StaticArrays = "1.9.16"
 Statistics = "1.11.1"
 julia = "1.10.10"
 
