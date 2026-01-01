@@ -10,15 +10,19 @@ mutable struct Normdata
     times::DataFrame
     timederOrder::Int
 end
-function mcnorm(m::Mocapdata)
-    SelectMarkerDF(m,mnum) = m.data[:,getMarkerInd(mnum)]
-
-    n = Matrix{Float64}(undef, size(m.data, 1), m.nMarkers)
-    for k in 1:m.nMarkers
-        n[:,k] = normdim2(Matrix(SelectMarkerDF(m,k)))
+function mcnorm(m::Mocapdata)::Normdata
+    #SelectMarkerDF(m,mnum) = m.data[:,getMarkerInd(mnum)]
+    nr = size(m.data, 1)
+    n = Matrix{Float64}(undef, nr, m.nMarkers)
+    X = Matrix(m.data)
+    nm = m.nMarkers
+    mn = m.markerName
+    for k in 1:nm
+        n[:,k] = normdim2(SelectMarker(X,k))
     end
-    data = DataFrame(n,m.markerName,makeunique=true)
-    mt = Normdata("Norm data",m.filename,m.nFrames,m.nMarkers,m.freq,m.markerName,data,m.meta,m.times,m.timederOrder)
+    data = DataFrame(n,mn,makeunique=true)
+    mt = Normdata("Norm data",m.filename,nr,nm,m.freq,mn,data,m.meta,m.times,m.timederOrder)
     return mt
 end
-normdim2(x) = sqrt.(sum(x.^2,dims=2))
+normdim2(x::Matrix{Float64})::Matrix{Float64} = sqrt.(sum(x.^2,dims=2))
+SelectMarker(m,mnum::Int)::Matrix{Float64} = m[:,getMarkerInd(mnum)]
