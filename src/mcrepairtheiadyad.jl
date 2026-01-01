@@ -7,19 +7,7 @@ res1,res2 = mcrepairtheiadyad(r)
 """
 function mcrepairtheiadyad(r::Vector{Mocapdata})
     m = [Matrix(x.data) for x in r]
-    ind = findall(.!isnan.([x[1] for x in m]))
-
-    function fillmat(x,x1num,x2num)
-        x1=x[x1num]
-        x2=x[x2num]
-        for k in eachindex(x)
-            if k != x2num
-                mask = isnan.(x1) .&& .!isnan.(x2) .&& .!isnan.(x[k])
-                x1[mask] = x[k][mask]
-            end
-        end
-        return x1
-    end
+    ind = findall(x -> !isnan(x[1,1]), m)
     m1 = fillmat(m,ind[1],ind[2])
     m2 = fillmat(m,ind[2],ind[1])
     res1 = deepcopy(r[ind[1]])
@@ -28,3 +16,15 @@ function mcrepairtheiadyad(r::Vector{Mocapdata})
     res2.data = DataFrame(m2, names(res2.data))
     return res1, res2
 end
+    function fillmat(x,x1num,x2num)
+        x1=x[x1num]
+        x2=x[x2num]
+        mask = falses(size(x1))
+        for k in eachindex(x)
+            if k != x2num
+               @. mask = isnan(x1) && !isnan(x2) && !isnan(x[k])
+                x1[mask] = x[k][mask]
+            end
+        end
+        return x1
+    end
