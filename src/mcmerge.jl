@@ -7,16 +7,16 @@ function mcmerge(m::Mocapdata...)
         truncate(dfs) = [df[1:minlen,:] for df in dfs]
         dfs = truncate(dfs)
     end
+    conn = deepcopy([x.conn for x in m])
     for k = 2:length(m)
-        if sum(m[k].conn) > 0
-            m[k].conn .+= maximum(m[k-1].conn)
+        if sum(conn[k]) > 0
+            conn[k] .+= maximum(conn[k-1])
         end
     end
     dfs = hcat(dfs...,makeunique=true)
     res = deepcopy(m[1])
-
     res.data = dfs
-    res.conn = vcat([x.conn for x in m]...)
+    res.conn = vcat(conn...)
     res.markerName = vcat([x.markerName for x in m]...)
     res.nMarkers = sum([x.nMarkers for x in m])
     return res
@@ -35,7 +35,6 @@ function mcmerge(m::Normdata...)
     end
     dfs = hcat(dfs...,makeunique=true)
     res = deepcopy(m[1])
-
     res.data = dfs
     res.markerName = vcat([x.markerName for x in m]...)
     res.nMarkers = sum([x.nMarkers for x in m])
