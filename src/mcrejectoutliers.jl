@@ -20,11 +20,13 @@ function mcrejectoutliers(m::Mocapdata;thres=250::Real)
         for k = 1:nMarkers-1
             for j = (k+1):nMarkers
                 if isnan(absdev[k,j,f])
-                  @inbounds rs[f][:,[k,j]] .= NaN
+                    @inbounds for col in (k,j)
+                        rs[f][:,col] .= NaN
+                  end
                 end
             end
         end
-        x[f,:] = reshape(rs[f],1,:)
+        x[f,:] = vec(rs[f])
     end
     res = deepcopy(m)
     res.data = DataFrame(x,names(m.data))
