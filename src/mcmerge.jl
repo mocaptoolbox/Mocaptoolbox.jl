@@ -1,11 +1,13 @@
 function mcmerge(m::Mocapdata...)
     length(unique(map(x -> x.freq,m))) == 1 || error("Different frame rates. Cannot merge")
     dfs = map(x->x.data,m)
+    qdfs = map(x->x.quat,m)
     minlen = minimum(nrow, dfs)
     if length(unique(nrow.(dfs))) > 1
         display("Different number of frames in the structures. The longer structure will be cut.")
         truncate(dfs) = [df[1:minlen,:] for df in dfs]
         dfs = truncate(dfs)
+        qdfs = truncate(qdfs)
     end
     conn = deepcopy([x.conn for x in m])
     for k = 2:length(m)
@@ -14,9 +16,11 @@ function mcmerge(m::Mocapdata...)
         end
     end
     dfs = hcat(dfs...,makeunique=true)
+    qdfs = hcat(qdfs...,makeunique=true)
     res = deepcopy(m[1])
     res.data = dfs
     res.conn = vcat(conn...)
+    res.quat = qdfs
     res.markerName = vcat([x.markerName for x in m]...)
     res.nMarkers = sum([x.nMarkers for x in m])
     return res

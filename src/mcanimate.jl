@@ -25,7 +25,7 @@ function mcanimate(m::Mocapdata;
     connwidth=2,
     conncolor=:white,
     audiofile=[])
-    fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth,conncolor=conncolor)
+    fig, ax, p,  X, Y, Z, QW, QX, QY, QZ, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth,conncolor=conncolor)
     N = m.nFrames
     mfreq = m.freq
     record(fig,filename,1:N;framerate=mfreq) do i
@@ -35,6 +35,17 @@ function mcanimate(m::Mocapdata;
         col_3 = Observable(:z)
         data = @lift(Point{3,Float64}.($df_obs[:, $col_1], $df_obs[:, $col_2],$df_obs[:, $col_3]))
         p[1][] = data[]
+        dfq_obs = Observable(DataFrame(
+            qw = QW[i, :],
+            qx = QX[i, :],
+            qy = QY[i, :],
+            qz = QZ[i, :]))
+        col_qw = Observable(:qw)
+        col_qx = Observable(:qx)
+        col_qy = Observable(:qy)
+        col_qz = Observable(:qz)
+        rot = @lift(GLMakie.Quaternion.($dfq_obs[:, $col_qw],$dfq_obs[:, $col_qx],$dfq_obs[:, $col_qy],$dfq_obs[:, $col_qz]))
+        p.rotation[] = [Makie.Quaternion(q.data ./ norm(q.data)) for q in rot[]]
         if showmnumbers || showmnames
             txt[1][] = data[]
         end
