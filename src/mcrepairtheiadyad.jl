@@ -6,25 +6,58 @@ r = mcread.(f)
 res1,res2 = mcrepairtheiadyad(r)
 """
 function mcrepairtheiadyad(r::Vector{Mocapdata})
-    m = [Matrix(x.data) for x in r]
-    ind = findall(x -> !isnan(x[1,1]), m)
-    m1 = fillmat(m,ind[1],ind[2])
-    m2 = fillmat(m,ind[2],ind[1])
-    res1 = deepcopy(r[ind[1]])
-    res1.data = DataFrame(m1, names(res1.data))
-    res2 = deepcopy(r[ind[2]])
-    res2.data = DataFrame(m2, names(res2.data))
-    return res1, res2
-end
-    function fillmat(x,x1num,x2num)
-        x1=x[x1num]
-        x2=x[x2num]
-        mask = falses(size(x1))
-        for k in eachindex(x)
-            if k != x2num
-               @. mask = isnan(x1) && !isnan(x2) && !isnan(x[k])
-                x1[mask] = x[k][mask]
+    allMats = [Matrix(x.data) for x in r]
+    firstMat = []
+    for k = 1:length(allMats)
+        if any(.!isnan.(allMats[k][1,:]))
+            push!(firstMat,k)
+        end
+    end
+    data1,data2 = [allMats[x] for x in firstMat]
+    allMats = allMats[setdiff(collect(1:length(allMats)),firstMat)]
+    d1nanrows = vec(all(isnan.(data1),dims=2))
+    allnanrows = [all(isnan.(x),dims=2) for x in allMats]
+    allnanrows = hcat(allnanrows...)
+    i = 1
+    inds = []
+    cur = []
+    for k = 1:length(allMats)
+        cur = allnanrows[:,k]
+        if all(cur[.!d1nanrows]) & any(cur[d1nanrows])
+            data1[.!cur,:] = allMats[k][.!cur,:]
+            push!(inds,k)
+        end
+    end
+    allMats = allMats[setdiff(collect(1:length(allMats)),inds)]
+    for k = 1:length(allMats)
+        if all(isnan.(data2[vec(any(.!isnan.(allMats[k]),dims=2)),:]))
+            data2[vec(any(.!isnan.(allMats[k]),dims=2)),:] = allMats[k][vec(any(.!isnan.(allMats[k]),dims=2)),:]
+        elseif any(all(any(.!isnan.(allMats[k]),dims=2),dims=2) .& all(isnan.(data1),dims=2))
+            assignable = vec(all(any(.!isnan.(allMats[k]),dims=2),dims=2) .& all(isnan.(data1),dims=2))
+            data1[assignable,:] = allMats[k][assignable,:]
+            allMats[k][assignable,:] = fill(NaN,size(allMats[k][assignable,:]))
+            if all(isnan.(data2[vec(any(.!isnan.(allMats[k]),dims=2)),:]))
+                data2[vec(any(.!isnan.(allMats[k]),dims=2)),:] = allMats[k][vec(any(.!isnan.(allMats[k]),dims=2)),:]
+            elseif all(any(isnan.(data2[vec(any(.!isnan.(allMats[k]),dims=2)),:])))
+                data2[vec(all(isnan.(data2),dims=2)),:] = allMats[k][vec(all(isnan.(data2),dims=2)),:]
+            elseif any(map(x -> cor(x[.!isnan.(allMats[k])],allMats[k][.!isnan.(allMats[k])]),[data1,data2]) .>.99)
+            end
+        else
+            assignable = vec(all(any(.!isnan.(allMats[k]),dims=2),dims=2) .& all(isnan.(data2),dims=2))
+            data2[assignable,:] = allMats[k][assignable,:]
+            allMats[k][assignable,:] = fill(NaN,size(allMats[k][assignable,:]))
+            if any(any(.!isnan.(allMats[k]),dims=2))
+                assignable = vec(all(any(.!isnan.(allMats[k]),dims=2),dims=2) .& all(isnan.(data1),dims=2))
+                if any(assignable)
+                    data1[assignable,:] = allMats[k][assignable,:];
+                    allMats[k][assignable,:] = fill(NaN,size(allMats[k][assignable,:]))
+                else
+                end
             end
         end
-        return x1
     end
+    d1,d2 = deepcopy.([r[1],r[2]])
+    d1.data = DataFrame(data1,names(r[1].data))
+    d2.data = DataFrame(data2,names(r[2].data))
+    return d1,d2
+end
