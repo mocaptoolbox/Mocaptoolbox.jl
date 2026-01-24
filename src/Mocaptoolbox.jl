@@ -86,4 +86,16 @@ include("mcrepairtheiadyad.jl")
 export mcrotate
 include("mcrotate.jl")
 
+export mctranslate
+include("mctranslate.jl")
+
+export mccat
+include("mccat.jl")
+
+export mcrotatedyad
+include("mcrotatedyad.jl")
+
+export mcmissing
+include("mcmissing.jl")
+
 end
