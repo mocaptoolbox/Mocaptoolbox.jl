@@ -1,6 +1,6 @@
-    """
-    rotates two mocap structures so that they lie at a similar distance from the camera view and merges the result
-    """
+"""
+rotates two mocap structures so that they lie at a similar distance from the camera view and merges the result
+"""
 function mcrotatedyad(m1::Mocapdata, m2::Mocapdata)::Mocapdata
     me = mcmerge(m1,m2)
     ma1,ma2 = Matrix.([m1.data,m2.data])
