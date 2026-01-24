@@ -10,7 +10,7 @@ backgroundcolor = :black,
 figsize=(800,600),
 msize=30,
 mcolor=:white,
-mcolormap = :Accent_8,
+mcolormap = :Accent_7,
 connwidth=2,
 conncolor=:white)
 
