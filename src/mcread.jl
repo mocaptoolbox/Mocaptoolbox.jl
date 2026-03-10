@@ -43,7 +43,11 @@ function mcread(fname)
     end
     function get_mocap_data(header_ind)
         table_text = join(lines[header_ind:end], "\n")
-        df = CSV.read(IOBuffer(table_text), DataFrame; delim='\t')
+        df = if any(occursin.("TRAJECTORY_TYPES", lines))
+            CSV.read(IOBuffer(table_text), DataFrame; delim='\t', header=false, skipto=2)
+        else
+            CSV.read(IOBuffer(table_text), DataFrame; delim='\t')
+        end
     end
 
     df = get_mocap_data(header_ind)
