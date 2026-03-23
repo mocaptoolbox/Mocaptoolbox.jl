@@ -1,13 +1,10 @@
-function mcresample(m::Union{Mocapdata,Normdata}, newfreq)
+function mcresample(m::Union{Mocapdata,Normdata}, newfreq::Int64)
 d1 = m.data
     t1 = collect(0:(size(d1,1)-1))/m.freq
     t2 = 0:(1/newfreq):t1[end]
-    interpvec = Vector{Vector{Float64}}(undef,size(d1,2))
-    for k = 1:size(d1,2)
-        interp = LinearInterpolation(d1[:,k],t1)
-        interpvec[k] = interp(t2)
-    end
-    interpmat = hcat(interpvec...)
+    ser = FastInterpolations.Series(Matrix(d1)) # interpolate so as to get the unwrapped phase difference at each beat
+    itp = cubic_interp(t1,ser)
+    interpmat = hcat(itp(t2)...)
     res = deepcopy(m)
     res.data = DataFrame(interpmat,names(m.data))
     res.freq = newfreq
