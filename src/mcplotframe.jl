@@ -51,7 +51,7 @@ function plotframe(m::Mocapdata; framenum = 1,azimuth=0,elevation=0,showconn=tru
         pl = linesegments!(ax, conn,color=conncolor,linewidth=connwidth)
     else
         conn = []
-        pl = []
+        pl = nothing
     end
     txt = nothing
     if showmnumbers && !showmnames
