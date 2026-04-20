@@ -17,10 +17,15 @@ function mcnorm(m::Mocapdata)::Normdata
     X = Matrix(m.data)
     nm = m.nMarkers
     mn = m.markerName
-    for k in 1:nm
+    Threads.@threads for k in 1:nm
         n[:,k] = normdim2(SelectMarker(X,k))
     end
-    data = DataFrame(n,mn,makeunique=true)
+
+    if size(n,2) == 1
+        data = DataFrame(n,[mn],makeunique=true)
+    else
+        data = DataFrame(n,mn,makeunique=true)
+    end
     mt = Normdata("Norm data",m.filename,nr,nm,m.freq,mn,data,m.meta,m.times,m.timederOrder)
     return mt
 end
