@@ -12,11 +12,8 @@ function heatmap(m::Mocapdata;reorder=true)
     Colorbar(fig[1, 2], h)
     display(fig)
 end
-function heatmap(m::Normdata;reorder=true)
+function heatmap(m::Normdata)
     x = Matrix(m.data)
-    if reorder == true && m.type == "Norm data"
-        display("No reordering with norm data")
-    end
     r,c = size(m.data)
     fig = Figure()
     ax = Axis(fig[1,1],yticks =(1:c,m.markerName))
