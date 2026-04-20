@@ -29,5 +29,5 @@ function mcnorm(m::Mocapdata)::Normdata
     mt = Normdata("Norm data",m.filename,nr,nm,m.freq,mn,data,m.meta,m.times,m.timederOrder)
     return mt
 end
-normdim2(x::Matrix{Float64})::Matrix{Float64} = sqrt.(sum(x.^2,dims=2))
+normdim2(x) = sqrt.(sum(x.^2,dims=2))
 SelectMarker(m,mnum::Int)::Matrix{Float64} = m[:,getMarkerInd(mnum)]
