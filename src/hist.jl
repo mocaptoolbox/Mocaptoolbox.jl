@@ -5,8 +5,6 @@ function hist(m::Mocapdata;reorder=true,fillgaps=true)
     x = Matrix(m.data)
     if reorder == true && m.type == "MoCap data"
         x = Mocaptoolbox.reorderdims(x)
-    elseif reorder == true && m.type == "Norm data"
-        display("No reordering with norm data")
     end
     r,c = size(x)
     fig = Figure()
@@ -29,8 +27,6 @@ function hist(m::Normdata;reorder=true,fillgaps=true)
     x = Matrix(m.data)
     if reorder == true && m.type == "MoCap data"
         x = Mocaptoolbox.reorderdims(x)
-    elseif reorder == true && m.type == "Norm data"
-        display("No reordering with norm data")
     end
     r,c = size(x)
     fig = Figure()
