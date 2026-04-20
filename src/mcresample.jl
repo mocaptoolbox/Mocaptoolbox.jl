@@ -1,4 +1,4 @@
-function mcresample(m::Union{Mocapdata,Normdata}, newfreq::Int,new::String)
+function mcresample(m::Union{Mocapdata,Normdata}, newfreq::Int)
     d1 = Matrix(m.data)
     n = size(d1,1)
     t1 = (0:n-1)./ m.freq
