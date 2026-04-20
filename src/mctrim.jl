@@ -38,8 +38,8 @@ function mctrim(m::Union{Mocapdata,Normdata},t1::Real,t2::Real;type="sec",timeta
     d1 = Matrix(m.data)
     tm = Matrix(m.times)
     if type == "sec"
-        t1=round(m.freq * t1)+1;
-        t2=round(m.freq * t2)+1;
+        t1=Int64(round(m.freq * t1)+1);
+        t2=Int64(round(m.freq * t2)+1);
     elseif type == "frame"
         nothing
     else
