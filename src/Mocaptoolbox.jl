@@ -1,7 +1,6 @@
 module Mocaptoolbox
 
-using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations, Setfield
-# StaticArrays and Quaternions not currently being used!
+using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations
 
 import Base: *
 
