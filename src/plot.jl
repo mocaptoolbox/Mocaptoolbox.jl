@@ -14,3 +14,10 @@ function plot(m::Mocapdata,dim)
     end
     display(fig)
 end
+function plot(m::Orderpar)
+    f = Figure()
+    ax = PolarAxis(f[1, 1], title = m.mname)
+    s = scatter!(m.directional,collect(m.beats), color = :orange)
+    display(f)
+    return f,ax,s
+end
