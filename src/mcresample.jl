@@ -9,9 +9,10 @@ function mcresample(m::Union{Mocapdata,Normdata}, newfreq::Int)
     Threads.@threads for i in eachindex(t2)
         @inbounds interpmat[i, :] = itp(t2[i])
     end
-    res = @set m.data = DataFrame(interpmat,names(m.data))
-    res = @set m.freq = newfreq
-    res = @set m.times = DataFrame(Frame=1:size(t2,1), Time=collect(t2))
-    res = @set m.nFrames = size(interpmat,1)
+    res = deepcopy(m)
+    res.data = DataFrame(interpmat,names(m.data))
+    res.freq = newfreq
+    res.times = DataFrame(Frame=1:size(t2,1), Time=collect(t2))
+    res.nFrames = size(res.data,1)
     return res
 end
