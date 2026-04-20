@@ -6,7 +6,11 @@ function heatmap(m::Mocapdata;reorder=true)
     r,c = size(m.data)
     fig = Figure()
     ndims = div(c,size(m.markerName,1))
-    mlabels = repeat(m.markerName,inner=ndims)
+    if reorder == true && m.type == "MoCap data"
+        mlabels = repeat(m.markerName,outer=ndims)
+    else
+        mlabels = repeat(m.markerName,inner=ndims)
+    end
     ax = Axis(fig[1,1],yticks =(1:c,mlabels),xlabel="Time (s)",ylabel="Marker")
     h = heatmap!(ax,m.times.Time,1:c,x)
     Colorbar(fig[1, 2], h)
