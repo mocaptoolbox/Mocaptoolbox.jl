@@ -9,7 +9,6 @@ function hist(m::Mocapdata;reorder=true,fillgaps=true)
         display("No reordering with norm data")
     end
     r,c = size(x)
-    @infiltrate
     fig = Figure()
     ndims = div(c,size(m.markerName,1))
     if reorder == true && m.type == "MoCap data"
