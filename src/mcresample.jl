@@ -3,7 +3,7 @@ function mcresample(m::Union{Mocapdata,Normdata}, newfreq::Int)
     n = size(d1,1)
     t1 = (0:n-1)./ m.freq
     t2 = 0:(1/newfreq):t1[end]
-    ser = FastInterpolations.Series(d1) # interpolate so as to get the unwrapped phase difference at each beat
+    ser = FastInterpolations.Series(d1)
     itp = cubic_interp(t1,ser)
     interpmat = Matrix{eltype(d1)}(undef, length(t2), size(d1, 2))
     Threads.@threads for i in eachindex(t2)
