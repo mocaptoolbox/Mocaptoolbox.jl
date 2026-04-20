@@ -1,6 +1,6 @@
 module Mocaptoolbox
 
-using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, Quaternions, FFMPEG, StaticArrays
+using CSV, DataFrames, GLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations, Setfield
 # StaticArrays and Quaternions not currently being used!
 
 import Base: *
@@ -50,9 +50,6 @@ include("mcfillgaps.jl")
 export mcfluidity
 include("mcfluidity.jl")
 
-export plot
-include("plot.jl")
-
 export heatmap
 include("heatmap.jl")
 
@@ -97,5 +94,20 @@ include("mcrotatedyad.jl")
 
 export mcmissing
 include("mcmissing.jl")
+
+export mcrowmean
+include("mcrowmean.jl")
+
+export mcrmmarker
+include("mcrmmarker.jl")
+
+export mcorderpar
+include("mcorderpar.jl")
+
+export plot
+include("plot.jl")
+
+export mcinitstruct
+include("mcinitstruct.jl")
 
 end
