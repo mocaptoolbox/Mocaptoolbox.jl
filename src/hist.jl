@@ -1,4 +1,4 @@
-function hist(m::Mocapdata;reorder=true,fillgaps=true)
+function Makie.hist(m::Mocapdata;reorder=true,fillgaps=true)
     if fillgaps==true
         m = mcfillgaps(m)
     end
@@ -20,7 +20,7 @@ function hist(m::Mocapdata;reorder=true,fillgaps=true)
     end
     display(fig)
 end
-function hist(m::Normdata;reorder=true,fillgaps=true)
+function Makie.hist(m::Normdata;reorder=true,fillgaps=true)
     if fillgaps==true
         m = mcfillgaps(m)
     end
@@ -36,7 +36,7 @@ function hist(m::Normdata;reorder=true,fillgaps=true)
     end
     display(fig)
 end
-function hist(m::Mocapdata,dim;fillgaps=true)
+function Makie.hist(m::Mocapdata,dim;fillgaps=true)
     if fillgaps==true
         m = mcfillgaps(m)
     end

@@ -1,7 +1,6 @@
 module Mocaptoolbox
 
-using CSV, DataFrames, WGLMakie, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations
-
+using CSV, DataFrames, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations, Makie
 import Base: *
 
 export mcread
