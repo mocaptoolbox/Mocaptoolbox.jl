@@ -14,7 +14,7 @@ function Makie.heatmap(m::Mocapdata;reorder=true)
     ax = Axis(fig[1,1],yticks =(1:c,mlabels),xlabel="Time (s)",ylabel="Marker")
     h = heatmap!(ax,m.times.Time,1:c,x)
     Colorbar(fig[1, 2], h)
-    display(fig)
+    return fig
 end
 function Makie.heatmap(m::Normdata)
     x = Matrix(m.data)
@@ -23,7 +23,7 @@ function Makie.heatmap(m::Normdata)
     ax = Axis(fig[1,1],yticks =(1:c,m.markerName))
     h = heatmap!(ax,m.times.Time,1:c,x)
     Colorbar(fig[1, 2], h)
-    display(fig)
+    return fig
 end
 function Makie.heatmap(m::Mocapdata,dim)
     md = m.data[:,dim:3:end]
@@ -32,5 +32,5 @@ function Makie.heatmap(m::Mocapdata,dim)
     ax = Axis(fig[1,1],yticks =(1:c,m.markerName),xlabel="Time (s)",ylabel="Marker")
     h = heatmap!(ax,m.times.Time,1:c,Matrix(md))
     Colorbar(fig[1, 2], h)
-    display(fig)
+    return fig
 end

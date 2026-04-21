@@ -18,7 +18,7 @@ function Makie.hist(m::Mocapdata;reorder=true,fillgaps=true)
     for i = 1:c
         hist!(ax, x[:,i], scale_to=-0.6, offset=i, direction=:x)
     end
-    display(fig)
+    return fig
 end
 function Makie.hist(m::Normdata;reorder=true,fillgaps=true)
     if fillgaps==true
@@ -34,7 +34,7 @@ function Makie.hist(m::Normdata;reorder=true,fillgaps=true)
     for i = 1:c
         hist!(ax, x[:,i], scale_to=-0.6, offset=i, direction=:x)
     end
-    display(fig)
+    return fig
 end
 function Makie.hist(m::Mocapdata,dim;fillgaps=true)
     if fillgaps==true
@@ -47,7 +47,7 @@ function Makie.hist(m::Mocapdata,dim;fillgaps=true)
     for i = 1:c
         hist!(ax, x[:,i], scale_to=-0.6, offset=i, direction=:x)
     end
-    display(fig)
+    return fig
 end
 function reorderdims(x)
     x = [x[:,1:3:end] x[:,2:3:end] x[:,3:3:end]]
