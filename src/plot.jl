@@ -4,7 +4,7 @@ function Makie.plot(m::Union{Mocapdata,Normdata};reorder=true)
     for k in 1:size(m.data,2)
         lines!(ax,m.times.Time,m.data[:,k])
     end
-    display(fig)
+    return fig
 end
 function Makie.plot(m::Mocapdata,dim)
     fig = Figure()
@@ -12,12 +12,11 @@ function Makie.plot(m::Mocapdata,dim)
     for k in dim:3:size(m.data,2)
         lines!(ax,m.times.Time,m.data[:,k])
     end
-    display(fig)
+    return fig
 end
 function Makie.plot(m::Orderpar)
     f = Figure()
     ax = PolarAxis(f[1, 1], title = m.mname)
     s = scatter!(m.directional,collect(m.beats), color = :orange)
-    display(f)
     return f,ax,s
 end
