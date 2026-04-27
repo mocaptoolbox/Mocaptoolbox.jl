@@ -1,6 +1,6 @@
 module Mocaptoolbox
 
-using CSV, DataFrames, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations, Makie
+using CSV, DataFrames, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations, Makie, GeneralizedMorseWavelets, FFTW, Distributions
 import Base: *
 
 export mcread
@@ -101,6 +101,9 @@ include("mcrmmarker.jl")
 
 export mcorderpar
 include("mcorderpar.jl")
+
+export mcpropsyncmag
+include("mcpropsyncmag.jl")
 
 export plot
 include("plot.jl")
