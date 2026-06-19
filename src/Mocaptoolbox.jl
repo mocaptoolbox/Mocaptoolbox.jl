@@ -1,6 +1,6 @@
 module Mocaptoolbox
 
-using CSV, DataFrames, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations, Makie, GeneralizedMorseWavelets, FFTW, Distributions
+using CSV, DataFrames, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations, Makie, GeneralizedMorseWavelets, FFTW, Distributions,STFT,Wavelets,ContinuousWavelets,MATLAB
 import Base: *
 
 export mcread
