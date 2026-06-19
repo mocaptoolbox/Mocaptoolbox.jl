@@ -13,15 +13,18 @@ mcolor=:white,
 mcolormap = :Accent_7,
 connwidth=2,
 conncolor=:white,
+fontsize = 10,
+textcolor=:white,
+textalignment = (:left,:center),
 viewmode=:fitzoom,
 xlim=(NaN,NaN),
 ylim=(NaN,NaN),
 zlim=(NaN,NaN))
 
-    fig, ax::Axis3, p::MeshScatter{Tuple{Vector{Point{3, Float64}}}}, X, Y, Z, txt::Union{Nothing,Makie.Text{Tuple{Vector{Point{3, Float64}}}}}, conn::Vector{Tuple{Point{3, Float64}, Point{3, Float64}}}, pl::Union{Nothing,LineSegments{Tuple{Base.ReinterpretArray{Point{3, Float64}, 1, Tuple{Point{3, Float64}, Point{3, Float64}}, Vector{Tuple{Point{3, Float64}, Point{3, Float64}}}, false}}}} = plotframe(m::Mocapdata; framenum = framenum, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth, conncolor=conncolor,viewmode=viewmode,xlim=xlim,ylim=ylim,zlim=zlim)
+    fig, ax::Axis3, p::MeshScatter{Tuple{Vector{Point{3, Float64}}}}, X, Y, Z, txt::Union{Nothing,Makie.Text{Tuple{Vector{Point{3, Float64}}}}}, conn::Vector{Tuple{Point{3, Float64}, Point{3, Float64}}}, pl::Union{Nothing,LineSegments{Tuple{Base.ReinterpretArray{Point{3, Float64}, 1, Tuple{Point{3, Float64}, Point{3, Float64}}, Vector{Tuple{Point{3, Float64}, Point{3, Float64}}}, false}}}} = plotframe(m::Mocapdata; framenum = framenum, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth, conncolor=conncolor,fontsize=fontsize,textcolor=textcolor,textalignment=textalignment,viewmode=viewmode,xlim=xlim,ylim=ylim,zlim=zlim)
     return fig, ax, p, X, Y, Z, txt, conn, pl
 end
-function plotframe(m::Mocapdata; framenum = 1,azimuth=0,elevation=0,showconn=true,showmnumbers=false,showmnames=false,showaxes=true,backgroundcolor=:white,figsize=(800, 600),msize=msize,mcolor=mcolor,mcolormap=colormap,connwidth=connwidth,conncolor=conncolor,viewmode=viewmode,xlim=(NaN,NaN),ylim=(NaN,NaN),zlim=(NaN,NaN))
+function plotframe(m::Mocapdata; framenum = 1,azimuth=0,elevation=0,showconn=true,showmnumbers=false,showmnames=false,showaxes=true,backgroundcolor=:white,figsize=(800, 600),msize=msize,mcolor=mcolor,mcolormap=colormap,connwidth=connwidth,conncolor=conncolor,fontsize=fontsize,textcolor=textcolor,textalignment=textalignment,viewmode=viewmode,xlim=(NaN,NaN),ylim=(NaN,NaN),zlim=(NaN,NaN))
     data = Matrix(m.data)
     X = data[:, 1:3:end]
     Y = data[:, 2:3:end]
@@ -54,11 +57,11 @@ function plotframe(m::Mocapdata; framenum = 1,azimuth=0,elevation=0,showconn=tru
     end
     txt = nothing
     if showmnumbers && !showmnames
-        txt = text!(ax,X[framenum,:],Y[framenum,:],Z[framenum,:],text = string.(1:length(m.markerName)),color=:white) # text as numbers
+        txt = text!(ax,X[framenum,:],Y[framenum,:],Z[framenum,:],text = string.(1:length(m.markerName)),color=textcolor,align = textalignment,fontsize=fontsize) # text as numbers
     elseif showmnames && !showmnumbers
-        txt = text!(ax,X[framenum,:],Y[framenum,:],Z[framenum,:],text = m.markerName,color=:white) # text as marker names
+        txt = text!(ax,X[framenum,:],Y[framenum,:],Z[framenum,:],text = m.markerName,color=textcolor,align = textalignment,fontsize=fontsize) # text as marker names
     elseif showmnumbers && showmnames
-        txt = text!(ax,X[framenum,:],Y[framenum,:],Z[framenum,:],text = string.(1:length(m.markerName)) .* " " .* m.markerName) # text as marker names
+        txt = text!(ax,X[framenum,:],Y[framenum,:],Z[framenum,:],text = string.(1:length(m.markerName)) .* " " .* m.markerName,color=textcolor,align = textalignment,fontsize=fontsize) # text as marker names
     end
     return fig, ax, p, X, Y, Z, txt, conn, pl
 end
