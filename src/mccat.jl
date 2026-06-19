@@ -9,8 +9,8 @@ function mccat(m::Mocapdata...;dim::Int64)::Mocapdata
         d = mat[k][:,dim:3:end]
         ex[k] = extrema(d[.!isnan.(d)])
     end
-    mind = unique([min(x[1]) for x in ex])[]
-    maxd = unique([max(x[2]) for x in ex])[]
+    mind = minimum([x[1] for x in ex])
+    maxd = maximum([x[2] for x in ex])
     height = maxd-mind
     v = Vector{Mocapdata}(undef, length(m))
     tv = [0.0,0.0,0.0]
