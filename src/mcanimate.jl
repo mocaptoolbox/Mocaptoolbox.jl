@@ -1,4 +1,6 @@
 """
+By default, the frame rate of the data is used as frame rate of the animations. To use a different frame rate, run e.g. mcanimate(m; fps=10)
+
 Audio can be added, e.g.:
 r = mcread(...)
 mcanimate(r,audiofile="audio.mp3")
@@ -31,7 +33,11 @@ function mcanimate(m::Mocapdata;
     xlim=(NaN,NaN),
     ylim=(NaN,NaN),
     zlim=(NaN,NaN),
+    fps = m.freq,
     audiofile=[])
+    if fps != m.freq
+        m = mcresample(m,fps)
+    end
     fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth,conncolor=conncolor,fontsize=fontsize,textcolor=textcolor,textalignment=textalignment,viewmode=viewmode,xlim=xlim,ylim=ylim,zlim=zlim,show=false)
     N = m.nFrames
     mfreq = m.freq
