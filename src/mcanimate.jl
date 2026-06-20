@@ -24,12 +24,15 @@ function mcanimate(m::Mocapdata;
     mcolormap = :Accent_7,
     connwidth=2,
     conncolor=:white,
+    fontsize = 10,
+    textcolor=:white,
+    textalignment = (:left,:center),
     viewmode=:fitzoom,
     xlim=(NaN,NaN),
     ylim=(NaN,NaN),
     zlim=(NaN,NaN),
     audiofile=[])
-    fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth,conncolor=conncolor,viewmode=viewmode,xlim=xlim,ylim=ylim,zlim=zlim)
+    fig, ax, p, X, Y, Z, txt, conn, pl = plotframe(m::Mocapdata; framenum = 1, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth,conncolor=conncolor,fontsize=fontsize,textcolor=textcolor,textalignment=textalignment,viewmode=viewmode,xlim=xlim,ylim=ylim,zlim=zlim,show=false)
     N = m.nFrames
     mfreq = m.freq
     record(fig,filename,1:N;framerate=mfreq) do i
