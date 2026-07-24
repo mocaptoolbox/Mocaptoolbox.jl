@@ -1,3 +1,13 @@
+"""
+mctimeder(m,n,freq;window_size::Int=7)
+m = data
+n = time derivative
+freq = frame rate of the data
+"""
+function mctimeder(m,n,freq;window_size::Int=7)
+    data = differentiate(m,n,window_size) .* freq^n
+    return data
+end
 function mctimeder(m::Union{Mocapdata,Normdata},n::Int=1;window_size::Int=7)::Union{Mocapdata,Normdata}
     data = differentiate(m.data,n,window_size) .* m.freq^n
     der = deepcopy(m)
