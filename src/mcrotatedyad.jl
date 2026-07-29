@@ -1,7 +1,7 @@
 """
 rotates two mocap structures so that they lie at a similar distance from the camera view and merges the result
 """
-function mcrotatedyad(m1::Mocapdata, m2::Mocapdata)::Mocapdata
+function mcrotatedyad(m1::Mocapdata, m2::Mocapdata;clockwise=false)::Mocapdata
     me = mcmerge(m1,m2)
     ma1,ma2 = Matrix.([m1.data,m2.data])
     mx1,mx2 = nanmean.([ma1[:,1:3:end],ma2[:,1:3:end]]) # mean pos x
@@ -14,5 +14,6 @@ function mcrotatedyad(m1::Mocapdata, m2::Mocapdata)::Mocapdata
 
     alpha=-atan((mx2-mx1)/(my2-my1)); # because theta = arctan(opp/adj)
     # original code in matlab is atan((my2-my1)/(mx2-mx1)), but Makie view swaps x and y
-    return mcrotate(me,180-180*alpha/pi);
+    clockwise ? ang = -(180-180*alpha/pi) : ang = 180-180*alpha/pi
+    return mcrotate(me,ang);
 end
