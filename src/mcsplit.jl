@@ -19,6 +19,7 @@ function mcsplit(m::Mocapdata,parts=2::Int)
         d[k] = deepcopy(m)
         d[k].data = DataFrame(Matrix(m.data[:,dims]),names(m.data)[dims])
         d[k].conn = m.conn[dimsconn,:]
+        d[k].conn = 1 .+ d[k].conn .- minimum(d[k].conn)
         d[k].markerName = m.markerName[dimsmarker]
         d[k].nMarkers = nmarkerspart
     end
