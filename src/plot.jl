@@ -17,6 +17,6 @@ end
 function Makie.plot(m::Orderpar)
     f = Figure()
     ax = PolarAxis(f[1, 1], title = m.mname)
-    s = scatter!(m.directional,collect(m.beats), color = :orange)
+    s = scatter!(m.directional_at_beats,collect(m.beats), color = :orange)
     return f,ax,s
 end

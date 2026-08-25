@@ -2,6 +2,7 @@ struct Orderpar
     length
     angle
     directional
+    directional_at_beats
     beats
     metriclevel
     bandpass
@@ -40,7 +41,7 @@ function mcorderpar(m::Union{Mocapdata,Normdata},tempo::Real; t0::Real = 0, metr
     MRV = mean(dphBeatsDirVecComp,dims=1); # mean resultant vector of directional data
     MRVL = vec(abs.(MRV));
     MRVA = vec(angle.(MRV));
-    return Orderpar(MRVL,MRVA,vec(dphBeatsDirVecRad),beats,metricLevel,bandpass,m.markerName)
+    return Orderpar(MRVL,MRVA,vec(dirVecRad),vec(dphBeatsDirVecRad),beats,metricLevel,bandpass,m.markerName)
 end
 """
 `mcorderpar(m::Union{Mocapdata,Normdata},tempo::Real,dim::Int64; t0::Real = 0, metricLevel::Real=1, bandpass::Bool=false,bwRatio::Float64=.4)::Orderpar`
@@ -75,5 +76,5 @@ function mcorderpar(m::Union{Mocapdata,Normdata},tempo::Real,dim::Int64; t0::Rea
     MRV = mean(dphBeatsDirVecComp,dims=1); # mean resultant vector of directional data
     MRVL = abs.(MRV)[];
     MRVA = angle.(MRV)[];
-    return Orderpar(MRVL,MRVA,vec(dphBeatsDirVecRad),beats,metricLevel,bandpass,m.markerName)
+    return Orderpar(MRVL,MRVA,vec(dirVecRad),vec(dphBeatsDirVecRad),beats,metricLevel,bandpass,m.markerName)
 end
