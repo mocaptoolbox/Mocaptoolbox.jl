@@ -111,4 +111,19 @@ include("plot.jl")
 export mcinitstruct
 include("mcinitstruct.jl")
 
+export mcbandpass
+include("mcbandpass.jl")
+
+export mcpcaproj
+include("mcpcaproj.jl")
+
+export mc2local
+include("mc2local.jl")
+
+export mc2global
+include("mc2global.jl")
+
+export mcvcat
+include("mcvcat.jl")
+
 end
