@@ -1,26 +1,26 @@
 function mcplotframe(m::Mocapdata;
-framenum=1,
-azimuth=0,
-elevation=0,
-showconn=true,
-showmnumbers=false,
-showmnames=false,
-showaxes=false, # axes are black
-backgroundcolor = :black,
-figsize=(800,600),
-msize=30,
-mcolor=:white,
-mcolormap = :Accent_7,
-connwidth=2,
-conncolor=:white,
-fontsize = 10,
-textcolor=:white,
-textalignment = (:left,:center),
-viewmode=:fitzoom,
-xlim=(NaN,NaN),
-ylim=(NaN,NaN),
-zlim=(NaN,NaN),
-show=true)
+    framenum=1,
+    azimuth=-.5π,
+    elevation=0,
+    showconn=true,
+    showmnumbers=false,
+    showmnames=false,
+    showaxes=false, # axes are black
+    backgroundcolor = :black,
+    figsize=(800,600),
+    msize=30,
+    mcolor=:white,
+    mcolormap = :Accent_7,
+    connwidth=2,
+    conncolor=:white,
+    fontsize = 10,
+    textcolor=:white,
+    textalignment = (:left,:center),
+    viewmode=:fitzoom,
+    xlim=(NaN,NaN),
+    ylim=(NaN,NaN),
+    zlim=(NaN,NaN),
+    show=true)
 
     fig, ax::Axis3, p::MeshScatter{Tuple{Vector{Point{3, Float64}}}}, X, Y, Z, txt::Union{Nothing,Makie.Text{Tuple{Vector{Point{3, Float64}}}}}, conn::Vector{Tuple{Point{3, Float64}, Point{3, Float64}}}, pl::Union{Nothing,LineSegments{Tuple{Base.ReinterpretArray{Point{3, Float64}, 1, Tuple{Point{3, Float64}, Point{3, Float64}}, Vector{Tuple{Point{3, Float64}, Point{3, Float64}}}, false}}}} = plotframe(m::Mocapdata; framenum = framenum, azimuth=azimuth,elevation=elevation,showconn=showconn,showmnumbers=showmnumbers,showmnames=showmnames,showaxes=showaxes,backgroundcolor=backgroundcolor,figsize=figsize,msize=msize,mcolor=mcolor,mcolormap = mcolormap, connwidth=connwidth, conncolor=conncolor,fontsize=fontsize,textcolor=textcolor,textalignment=textalignment,viewmode=viewmode,xlim=xlim,ylim=ylim,zlim=zlim,show=show)
     return fig, ax, p, X, Y, Z, txt, conn, pl

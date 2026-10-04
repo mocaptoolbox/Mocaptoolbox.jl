@@ -13,7 +13,7 @@ mcanimate(t,audiofile="audio.mp3")
 """
 function mcanimate(m::Mocapdata;
     filename = "animation.mp4",
-    azimuth=0,
+    azimuth=-.5π,
     elevation=0,
     showconn=true,
     showmnumbers=false,
