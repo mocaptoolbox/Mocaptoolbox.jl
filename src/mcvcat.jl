@@ -1,3 +1,6 @@
+"""
+Vertically concatenate MoCap data having same number of dimensions.
+"""
 function mcvcat(m::Mocapdata...)
     m2 = deepcopy(m[1])
     map(x->x.data,m)

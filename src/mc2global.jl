@@ -1,3 +1,6 @@
+"""
+Use a mocapstruct containing one marker to bring local coordinate system data back to a global coordinate system.
+"""
 function mc2global(m::Mocapdata,marker::Mocapdata)
     m2 = deepcopy(m)
     d = Matrix(marker.data)

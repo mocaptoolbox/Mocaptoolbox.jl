@@ -120,10 +120,16 @@ include("mcpcaproj.jl")
 export mc2local
 include("mc2local.jl")
 
+export mc2frontal
+include("mc2frontal.jl")
+
 export mc2global
 include("mc2global.jl")
 
 export mcvcat
 include("mcvcat.jl")
+
+export mcdur
+include("mcdur.jl")
 
 end
