@@ -1,6 +1,7 @@
 module Mocaptoolbox
 
-using CSV, DataFrames, SavitzkyGolay, DataInterpolations, Statistics, NaNStatistics, LinearAlgebra, Distances, Rotations, FFMPEG, DSP, FastInterpolations, Makie, GeneralizedMorseWavelets, FFTW, Distributions,STFT,Wavelets,ContinuousWavelets,MATLAB
+using CSV,DSP,DataFrames,DataInterpolations,Distances,Distributions,FFMPEG,FFTW,FastInterpolations,GeneralizedMorseWavelets,LinearAlgebra,MATLAB,Makie,NaNStatistics,Rotations,STFT,SavitzkyGolay,Statistics,Wavelets,Printf
+
 import Base: *
 
 export mcread
@@ -105,9 +106,6 @@ include("mcorderpar.jl")
 export mcpropsyncmag
 include("mcpropsyncmag.jl")
 
-export plot
-include("plot.jl")
-
 export mcinitstruct
 include("mcinitstruct.jl")
 
@@ -131,5 +129,11 @@ include("mcvcat.jl")
 
 export mcdur
 include("mcdur.jl")
+
+export mcdrp
+include("mcdrp.jl")
+
+export plot
+include("plot.jl")
 
 end
