@@ -133,6 +133,12 @@ include("mcdur.jl")
 export mcdrp
 include("mcdrp.jl")
 
+export mcmirror
+include("mcmirror.jl")
+
+export mczeros
+include("mczeros.jl")
+
 export plot
 include("plot.jl")
 
