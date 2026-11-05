@@ -6,7 +6,7 @@ mutable struct Normdata
     freq::Int
     markerName::Union{String, Vector{String}}
     data::DataFrame
-    meta::Vector
+    meta::Dict
     times::DataFrame
     timederOrder::Int
 end

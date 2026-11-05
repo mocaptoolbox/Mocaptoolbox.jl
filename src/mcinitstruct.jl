@@ -4,6 +4,6 @@ function mcinitstruct(df::DataFrame,fname::String,freq::Int,timederOrder::Int)
     nframes = size(df,1)
     nmarkers = size(df,2)
     bp = string.(1:length(nmarkers))
-    meta = ["no","metadata"]
+    meta = Dict("metadata" => false)
     mt = Normdata("Norm data",fname,nframes,nmarkers,freq,bp,df,meta,times,timederOrder)
 end
