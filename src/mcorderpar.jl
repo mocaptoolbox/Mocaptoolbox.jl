@@ -9,14 +9,17 @@ struct Orderpar
     mname
 end
 """
-`mcorderpar(m::Union{Mocapdata,Normdata},tempo::Real; t0::Real = 0, metricLevel::Real=1, bandpass::Bool=false,bwRatio::Float64=.4)::Orderpar`
+`mcorderpar(m::Union{Mocapdata,Normdata},tempo::Real; t0::Real = 0, metricLevel::Real=1, bandpass::Bool=true,bwRatio::Float64=.4)::Orderpar`
 
 Computes order parameter for each marker and dimension.
 """
-function mcorderpar(m::Union{Mocapdata,Normdata},tempo::Real; t0::Real = 0, metricLevel::Real=1, bandpass::Bool=false,bwRatio::Float64=.4)::Orderpar
+function mcorderpar(m::Union{Mocapdata,Normdata},tempo::Real; t0::Real = 0, metricLevel::Real=1, bandpass::Bool=true,bwRatio::Float64=.4)::Orderpar
     m.timederOrder > 0 || error("Position data cannot be used. Use a time derivative")
     f0 = tempo/60 # beat frequency in hertz
-    bandpass ? error("mcbandpass not yet implemented") : Nothing
+    if bandpass
+        m = mcbandpass(m,(1-bwRatio/2)*f0, (1+bwRatio/2)*f0);
+    end
+
     d = Matrix(m.data)
     durs = m.nFrames/m.freq;
     #dims = 1:size(d,2)/numel(m.markerName);
@@ -51,7 +54,9 @@ Computes order parameter for a given marker and dimension. The result can be plo
 function mcorderpar(m::Union{Mocapdata,Normdata},tempo::Real,dim::Int64; t0::Real = 0, metricLevel::Real=1, bandpass::Bool=false,bwRatio::Float64=.4)::Orderpar
     m.timederOrder > 0 || error("Position data cannot be used. Use a time derivative")
     f0 = tempo/60 # beat frequency in hertz
-    bandpass ? error("mcbandpass not yet implemented") : Nothing
+    if bandpass
+        m = mcbandpass(m,(1-bwRatio/2)*f0, (1+bwRatio/2)*f0);
+    end
     d = Matrix(m.data)[dim:3:end]
     durs = m.nFrames/m.freq;
     #dims = 1:size(d,2)/numel(m.markerName);

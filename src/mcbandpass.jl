@@ -45,7 +45,7 @@ function fftfilter(y, fs, minf, maxf, method="rect")
             z .*= sc
         else
             # Frequencies to be removed
-            z[abs.(f) .< minf .| (abs.(f) .> maxf)] .= 0
+            z[(abs.(f) .< minf) .| (abs.(f) .> maxf)] .= 0
         end
 
         # `real` removes small numerical imaginary components
