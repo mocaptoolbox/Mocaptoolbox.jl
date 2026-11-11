@@ -15,16 +15,32 @@
         timederOrder::Int
         conn::Matrix{Int}
     end
-function mcread(fname)::Mocapdata
+"""
+Read in a .tsv file into a MoCap structure
+"""
+function mcread(fname::String)::Mocapdata
     lines::Vector{String} = readlines(fname)
     flag_from_header, header_ind, meta = get_prelude(lines)
     df = get_mocap_data(lines,header_ind::Int64)
     m = Mocap(meta,df)
-
     flag = :SOLVER in keys(meta) ? "Theia3D" : flag_from_header
-
     mt = Mocapdata("MoCap data",fname,get_nframes(m),get_nMarkers(m,lines,flag),get_framerate(m),get_body_parts(m,lines,flag),get_position(m,flag),m.meta,get_times(m,flag),0,makeConn(m,lines,flag))
     return mt
+end
+"""
+Read in a data matrix into a 3D MoCap structure. By default, the data is read as 60 hz position data.
+"""
+function mcread(x::Matrix{Float64};fname="",freq=60,timeder=0,markername = Vector{String}(undef,size(x,2)÷ 3))::Mocapdata
+    ndims = size(x,2)
+    ndims % 3 != 0 && error("Data does not seem to be three-dimensional")
+    nMarkers = ndims ÷ 3
+    meta = Dict()
+    markername = ["$(x)$(i)" for i in 1:nMarkers  for x in ["X" "Y" "Z"]]
+    m = DataFrame(x,markername)
+    get_times_s(m) = (collect(1:size(m,1)).-1)./freq
+    times = DataFrame(Frame=1:size(m,1),Time=get_times_s(m))
+    conn = zeros(Int,nMarkers,2)
+    mt = Mocapdata("MoCap data",fname,size(x,1),nMarkers,freq,markername,m,meta,times,timeder,conn)
 end
 find_header(x::Vector{String}, y::String) = findfirst(contains(y),x)::Union{Int64,Nothing}
 function get_prelude(lines::Vector{String})
