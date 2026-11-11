@@ -51,6 +51,6 @@ function fftfilter(y, fs, minf, maxf, method="rect")
         # `real` removes small numerical imaginary components
         y2[:, k] = real.(ifft(z))
     end
-
-    return ndims(y) == 2 && size(y, 2) == 1 ? vec(y2) : y2
+    #return ndims(y) == 2 && size(y, 2) == 1 ? vec(y2) : y2
+    return y2
 end
