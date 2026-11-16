@@ -1,5 +1,6 @@
 """
 Band pass filters data in a MoCap or norm structure using an FFT filter.
+`function mcbandpass(m::Union{Mocapdata,Normdata},f1,f2;method=rect)`
 
 """
 function mcbandpass(m::Union{Mocapdata,Normdata},f1,f2;method=rect)
