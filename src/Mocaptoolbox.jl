@@ -141,6 +141,10 @@ include("mczeros.jl")
 
 export mcstandardize
 include("mcstandardize.jl")
+
+export mcphasescramble
+include("mcphasescramble.jl")
+
 export plot
 include("plot.jl")
 
