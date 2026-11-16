@@ -58,7 +58,7 @@ function Σdiags(p1,p2,fs;maxlag=2,abs=false,fun=fun)
     peaklag = lags[argmax(Σdiags)]
     poslaginds = length(Σdiags)÷2+2:length(Σdiags)
     neglaginds = 1:length(Σdiags)÷2
-    asym = mean(abs((Σdiags[poslaginds] - Σdiags[neglaginds])./(Σdiags[poslaginds] + Σdiags[neglaginds])))
+    asym = mean(Base.abs.((Σdiags[poslaginds] - Σdiags[neglaginds])./(Σdiags[poslaginds] + Σdiags[neglaginds])))
     s = Sumdiags(Σdiags,lags,peakval,peaklag,asym)
 end
 """
