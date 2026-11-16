@@ -20,7 +20,11 @@ function mcnorm(m::Mocapdata)::Normdata
     Threads.@threads for k in 1:nm
         n[:,k] = normdim2(SelectMarker(X,k))
     end
-    data = DataFrame(n,mn,makeunique=true)
+    if length(mn) == size(n,2)
+        data = DataFrame(n,mn,makeunique=true)
+    else
+        data = DataFrame(join(mn) => vec(n))
+    end
     mt = Normdata("Norm data",m.filename,nr,nm,m.freq,mn,data,m.meta,m.times,m.timederOrder)
     return mt
 end
