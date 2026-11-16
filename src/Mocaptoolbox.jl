@@ -139,6 +139,8 @@ include("mcmirror.jl")
 export mczeros
 include("mczeros.jl")
 
+export mcstandardize
+include("mcstandardize.jl")
 export plot
 include("plot.jl")
 
